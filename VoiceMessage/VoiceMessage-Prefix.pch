@@ -1,0 +1,32 @@
+//
+// Prefix header for all source files of the 'VoiceMessage' target in the 'VoiceMessage' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#endif
+
+#define DROPBOX_APP_KEY     @"7erbifrwdd4a8b3"
+#define DROPBOX_APP_SECRET  @"r3dj073kdigjmii"
+
+
+#define RECORDED_FILENAME   @"voiceMessage.m4a"
+
+#ifdef DEBUG
+    #define VMLogM(msg) NSLog(@"%d: %s %@", __LINE__, __FUNCTION__, msg)
+    #define VMLog(fmt, ...) NSLog(@"%d: %s" fmt, __LINE__, __FUNCTION__, __VA_ARGS__)
+    #define VMLogMin(...) NSLog(@"%d: %s Min", __LINE__, __FUNCTION__)
+    #define VMLogMout(...) NSLog(@"%d: %s Mout", __LINE__, __FUNCTION__)
+#else
+    #define VMLogM(msg)
+    #define VMLog(fmt, ...)
+    #define VMLogMin(...)
+    #define VMLogMout(...)
+#endif

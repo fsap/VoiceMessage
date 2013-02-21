@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>sendTo</key>
+	<string></string>
+	<key>recipient</key>
+	<string></string>
+	<key>subject</key>
+	<string></string>
+	<key>message</key>
+	<string></string>
+	<key>vmHomeDir</key>
+	<string>/VoiceMessage</string>
+	<key>voiceDir</key>
+	<string>/VoiceMessage/voice</string>
+	<key>htmlDir</key>
+	<string>/VoiceMessage/index.html</string>
+</dict>
+</plist>
