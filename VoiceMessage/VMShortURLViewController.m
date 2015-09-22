@@ -19,8 +19,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self.navigationController setNavigationBarHidden:YES];
     self.navigationItem.hidesBackButton = YES;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"中止" style:UIBarButtonItemStyleDone target:self action:@selector(done:)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"中止" style:UIBarButtonItemStyleDone target:self action:@selector(done:)];
 
     stopButtonTapped = NO;
     self.bitly = [[BitlyURLShortener alloc] init];

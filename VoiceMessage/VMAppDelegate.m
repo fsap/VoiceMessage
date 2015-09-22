@@ -24,12 +24,25 @@
     }
 #endif
     
+    VMLogMin();
     NSDictionary *plist = [NSDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"userDefaults" ofType:@"plist"]];
     [[NSUserDefaults standardUserDefaults] registerDefaults:plist];
     
     DBSession* dbSession = [[DBSession alloc] initWithAppKey:DROPBOX_APP_KEY
                                                    appSecret:DROPBOX_APP_SECRET
                                                         root:kDBRootDropbox];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    BOOL isConnectDB = [[defaults objectForKey:@"connectDB"] boolValue];
+    VMLog(@"connect setting[%d]", isConnectDB);
+    
+    if (!isConnectDB) {
+        VMLogM(@"disconnect to db.");
+        // 解除処理
+        [dbSession unlinkAll];
+        // 設定解除(?)
+    }
+    
     [DBSession setSharedSession:dbSession];
 
     [[BitlyConfig sharedBitlyConfig] setBitlyLogin:@"fsap" bitlyAPIKey:@"R_420b054d652ce5deb76632459b837192"];
@@ -47,6 +60,9 @@
         if ([[DBSession sharedSession] isLinked]) {
             NSLog(@"App linked successfully!");
             // At this point you can start making API calls
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setBool:YES forKey:@"connectDB"];
+            [defaults synchronize];
         }
         return YES;
     }

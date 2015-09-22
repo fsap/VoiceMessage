@@ -18,9 +18,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.navigationController setNavigationBarHidden:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    VMLogMin();
     [super viewWillAppear:animated];
     
     self.navigationItem.hidesBackButton = YES;
@@ -33,6 +36,7 @@
                                         repeats:NO];
     }
     else{
+        VMLogM(@"init new db client.");
         self.restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
         self.restClient.delegate = self;
         [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -50,6 +54,7 @@
 }
 
 - (void) downloadIndexHtml{
+    VMLogMin();
     NSFileManager *fm = [NSFileManager defaultManager];
     NSURL *url = [UTility applicationHiddenDocumentsDirectory];
     url = [url URLByAppendingPathComponent:@"index.html"];
@@ -68,6 +73,7 @@
 }
 
 - (void)restClient:(DBRestClient *)client loadedFile:(NSString *)destPath {
+    VMLog(@"in. cient[%@] file[%@]", client, destPath);
     // index.html のダウンロード成功。次の画面へ
     [self gotoRecord];
 }

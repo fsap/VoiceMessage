@@ -7,21 +7,45 @@
 //
 
 #import "VMRecordingViewController.h"
+#import "VMUploadSoundViewController.h"
 #import "UTility.h"
+#import "Reachability.h"
 
 @interface VMRecordingViewController ()
+
+@property (assign, nonatomic)CGFloat currentTime;
+@property (strong, nonatomic)NSTimer *recordingTimer;
+
 - (IBAction) startRecording;
 - (IBAction) stopRecording;
+- (IBAction)confirmYes:(id)sender;
+- (IBAction)confirmNo:(id)sender;
+- (IBAction)badgeTapped:(id)sender;
+- (void)updateTime;
+- (void)showConfirmView;
+- (void)updateBadge:(NSInteger)numRecorded;
 @end
 
+
 @implementation VMRecordingViewController
+
+@synthesize currentTime;
+@synthesize recordingTimer;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.currentTime = 0;
+    [self updateTime];
     
+    [self.navigationController setNavigationBarHidden:YES];
     self.navigationItem.hidesBackButton = YES;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"中止" style:UIBarButtonItemStyleDone target:self action:@selector(done:)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"中止" style:UIBarButtonItemStyleDone target:self action:@selector(done:)];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSInteger numRecorded = [[defaults objectForKey:@"numRecorded"] intValue];
+    [self updateBadge:numRecorded];
     
     [self beginRecordingSound];
 }
@@ -32,6 +56,7 @@
 }
 
 - (void) beginRecordingSound{
+    VMLogMin();
     NSURL *url = [NSURL URLWithString:@"/System/Library/Audio/UISounds/begin_record.caf"];
     SystemSoundID soundID;
     OSStatus status = AudioServicesCreateSystemSoundID((__bridge CFURLRef)url, &soundID);
@@ -39,6 +64,7 @@
         AudioServicesAddSystemSoundCompletion(soundID, NULL, NULL, beginRecordingSoundCompletion,(__bridge void *)(self));
         AudioServicesPlaySystemSound(soundID);
     }
+
 }
 
 void beginRecordingSoundCompletion(SystemSoundID soundID, void* clientData){
@@ -60,6 +86,7 @@ void beginRecordingSoundCompletion(SystemSoundID soundID, void* clientData){
         AudioServicesAddSystemSoundCompletion(soundID, NULL, NULL, endRecordingSoundCompletion,(__bridge void *)(self));
         AudioServicesPlaySystemSound(soundID);
     }
+    [self.recordingTimer invalidate];
 }
 
 void endRecordingSoundCompletion(SystemSoundID soundID, void* clientData){
@@ -77,6 +104,7 @@ void endRecordingSoundCompletion(SystemSoundID soundID, void* clientData){
 
 - (IBAction) startRecording
 {
+    VMLogMin();
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"エラー"
                                                         message:@"エラーが発生しました。時間を置いて再度お試しください。"
                                                        delegate:self
@@ -143,7 +171,7 @@ void endRecordingSoundCompletion(SystemSoundID soundID, void* clientData){
 	//prepare to record
 	[recorder setDelegate:self];
 	if(![recorder prepareToRecord]){
-        NSLog(@"Fail:prepareToRecord");
+        NSLog(@"Fail:prepareToRecord [%@]", [[NSString stringWithFormat:@"%@", recorder] description]);
         [alertView show];
         return;
     }
@@ -175,11 +203,37 @@ void endRecordingSoundCompletion(SystemSoundID soundID, void* clientData){
         [alertView show];
         return;
     }
+    self.recordingTimer = [NSTimer scheduledTimerWithTimeInterval:0.01f target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
 }
 
+/*
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    [self.navigationController popToRootViewControllerAnimated:NO];
+    VMLog(@"in. index[%d]", buttonIndex);
+    
+    if (buttonIndex == 0) {
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }
+    else {
+        // オンライン判定
+        Reachability *reachability = [Reachability reachabilityForInternetConnection];
+        NetworkStatus status = [reachability currentReachabilityStatus];
+        
+        switch (status) {
+            case NotReachable:
+                VMLogM(@"offline.");
+                break;
+                
+            default:
+                VMLogM(@"online.");
+                break;
+        }
+        
+        // ToDo:アップロード
+        VMUploadSoundViewController *uploadController = [self.storyboard instantiateViewControllerWithIdentifier:@"UploadSound"];
+        [self.navigationController pushViewController:uploadController animated:YES];
+    }
 }
+*/
 
 - (IBAction) stopRecording
 {
@@ -190,6 +244,17 @@ void endRecordingSoundCompletion(SystemSoundID soundID, void* clientData){
 {
 	NSLog (@"audioRecorderDidFinishRecording:successfully:%@",(flag?@"YES":@"NO"));
     [self endRecordingSound];
+    
+    // ToDo:アラート
+    [self showConfirmView];
+/*
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Confirm"
+                                                    message: @"収録した音声を使用しますか？"
+                                                   delegate: self
+                                          cancelButtonTitle:@"いいえ"
+                                          otherButtonTitles:@"はい", nil];
+    [alert show];
+*/
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -201,4 +266,118 @@ void endRecordingSoundCompletion(SystemSoundID soundID, void* clientData){
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+// Override
+- (void)segue {
+    VMLogMin();
+}
+
+
+#pragma mark -IBAction
+
+- (void)confirmYes:(id)sender {
+    // オンライン判定
+    Reachability *reachability = [Reachability reachabilityForInternetConnection];
+    NetworkStatus status = [reachability currentReachabilityStatus];
+    
+    switch (status) {
+        case NotReachable:
+            VMLogM(@"offline.");
+        {
+            // ToDo:オフライン時動作
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSInteger numRecorded = [[defaults objectForKey:@"numRecorded"] intValue];
+            VMLog(@"num recorded[%d]", numRecorded);
+            // とりあえず1件
+            if (numRecorded > 1) {
+                numRecorded = 1;
+            }
+            else {
+                numRecorded++;
+            }
+            
+            NSURL *url = [UTility applicationHiddenDocumentsDirectory];
+            NSString *recordingFileName = [NSString stringWithFormat:@"tmp_%02d.m4a", numRecorded];
+            url = [url URLByAppendingPathComponent:recordingFileName];
+            VMLog(@"Temporary record file[%@]", url);
+            
+            NSFileManager *fileManager = [NSFileManager defaultManager];
+            NSError *error;
+            if ([fileManager copyItemAtPath:recorderFilePath toPath:[url path] error:&error]) {
+                NSString *recipient = [defaults objectForKey:@"recipient"];
+                NSString *subject = [defaults objectForKey:@"subject"];
+
+                [defaults setInteger:numRecorded forKey:@"numRecorded"];
+                [defaults setObject:recipient forKey:[NSString stringWithFormat:@"recipient_%02d", numRecorded]];
+                [defaults setObject:subject forKey:[NSString stringWithFormat:@"subject_%02d", numRecorded]];
+
+                [defaults synchronize];
+            }
+            else {
+                VMLog(@"failed to copy. [%@]", error);
+            }
+            // バッジ更新
+            [self updateBadge:numRecorded];
+            
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Temporary Saved"
+                                                            message: @""
+                                                           delegate: self
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+
+            return;
+        }
+            break;
+            
+        default:
+            VMLogM(@"online.");
+            break;
+    }
+    
+    // ToDo:アップロード
+    VMUploadSoundViewController *uploadController = [self.storyboard instantiateViewControllerWithIdentifier:@"UploadSound"];
+    [self.navigationController pushViewController:uploadController animated:YES];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    VMLog(@"in. index[%d]", buttonIndex);
+    
+    if (buttonIndex == 0) {
+        [self.navigationController popToRootViewControllerAnimated:NO];
+    }
+}
+
+- (void)confirmNo:(id)sender {
+    [self.navigationController popToRootViewControllerAnimated:NO];
+}
+
+
+#pragma mark -Private
+
+- (void)updateTime {
+    self.currentTime += 0.01;
+    int sec = floorf(self.currentTime);
+    int min = self.currentTime / 60;
+    int msec = (self.currentTime - sec) * 100;
+    [self.timerLabel setText:[NSString stringWithFormat:@"%02d:%02d.%02d", min, sec % 60, msec]];
+}
+
+- (void)showConfirmView {
+    self.stopRecordingButton.hidden = YES;
+    self.confirmView.hidden = NO;
+}
+
+- (void)updateBadge:(NSInteger)numRecorded {
+    if (numRecorded > 0) {
+        self.numRecordedBadgeButton.hidden = NO;
+    
+        // ToDo:バッジ数更新(Labelに分離)
+    }
+    else {
+        self.numRecordedBadgeButton.hidden = YES;
+    }
+}
+
+
 @end

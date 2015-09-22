@@ -17,4 +17,10 @@
 	NSString *recorderFilePath;
 	AVAudioRecorder *recorder;
 }
+
+@property (strong, nonatomic)IBOutlet UILabel *timerLabel;
+@property (strong, nonatomic)IBOutlet UIView *confirmView;
+@property (strong, nonatomic)IBOutlet UIButton *stopRecordingButton;
+@property (strong, nonatomic)IBOutlet UIButton *numRecordedBadgeButton;
+
 @end

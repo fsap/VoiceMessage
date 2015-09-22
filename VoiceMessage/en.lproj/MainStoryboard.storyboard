@@ -22,7 +22,7 @@
             </objects>
             <point key="canvasLocation" x="-618" y="182"/>
         </scene>
-        <!--Connect Drop Box View Controller - DropBoxへ接続…-->
+        <!--Connect Drop Box View Controller - Connect to Dropbox…-->
         <scene sceneID="5">
             <objects>
                 <viewController storyboardIdentifier="initializeView" id="2" customClass="VMConnectDropBoxViewController" sceneMemberID="viewController">
@@ -30,6 +30,10 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_connect_to_db.png" id="Z0q-Dr-pmC">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <button opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" id="10">
                                 <rect key="frame" x="282" y="509" width="18" height="19"/>
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="15"/>
@@ -44,21 +48,21 @@
                                     <segue destination="6" kind="push" identifier="showAlternate" id="11"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Microphone.png" id="yom-VB-9Sn">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Microphone.png" id="yom-VB-9Sn">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.25" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="DropBoxへ接続…" id="hoo-NW-g6y"/>
+                    <navigationItem key="navigationItem" title="Connect to Dropbox…" id="hoo-NW-g6y"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackTranslucent" prompted="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-165" y="182"/>
         </scene>
-        <!--Input Subject View Controller - メッセージの作成-->
+        <!--Input Subject View Controller - Name + Subject-->
         <scene sceneID="9">
             <objects>
                 <viewController storyboardIdentifier="recordView" id="6" customClass="VMInputSubjectViewController" sceneMemberID="viewController">
@@ -66,54 +70,54 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Microphone.png" id="szg-LZ-tW4">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_input_subject.png" id="Chr-ji-EF6">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Microphone.png" id="szg-LZ-tW4">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="宛先" minimumFontSize="17" id="Ljv-eQ-qRA">
-                                <rect key="frame" x="12" y="54" width="236" height="30"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="taQ-2m-m2V">
+                                <rect key="frame" x="136" y="220" width="47" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="badge_num_recorded.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="badgeTapped:" destination="7rx-V8-12e" eventType="touchUpInside" id="avA-dY-ARD"/>
+                                    <action selector="badgeTapped:" destination="6" eventType="touchUpInside" id="oSo-CV-ypH"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="NAME" textAlignment="center" minimumFontSize="17" background="bg_name_text.png" id="Ljv-eQ-qRA">
+                                <rect key="frame" x="72" y="40" width="167" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                 <connections>
                                     <outlet property="delegate" destination="6" id="E7T-iM-7fc"/>
                                 </connections>
                             </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="様へ" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Wsg-uP-dOT">
-                                <rect key="frame" x="264" y="58" width="42" height="21"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SUBJECT" textAlignment="center" minimumFontSize="17" background="bg_subject_text.png" id="r78-D7-Utz">
+                                <rect key="frame" x="11" y="90" width="297" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="タイトル" minimumFontSize="17" id="r78-D7-Utz">
-                                <rect key="frame" x="13" y="92" width="294" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="6" id="OrN-r7-e16"/>
                                 </connections>
                             </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="qYS-db-Z8d">
-                                <rect key="frame" x="14" y="130" width="293" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <connections>
-                                    <outlet property="delegate" destination="6" id="KY9-pH-QAO"/>
-                                </connections>
-                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DDg-b7-rTa">
-                                <rect key="frame" x="128" y="430" width="64" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <rect key="frame" x="84" y="380" width="151" height="151"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="record.png">
+                                <state key="normal" image="button_recording.png">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -131,11 +135,11 @@
                             <outletCollection property="gestureRecognizers" destination="NO3-LX-yJ1" appends="YES" id="cZe-DF-79o"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="メッセージの作成" id="xvw-xn-VXo"/>
+                    <navigationItem key="navigationItem" title="Name + Subject" id="xvw-xn-VXo"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackTranslucent" prompted="NO"/>
                     <connections>
+                        <outlet property="numRecordedBadgeButton" destination="taQ-2m-m2V" id="d6o-jR-GOT"/>
                         <outlet property="swipeGestureRecognizer" destination="NO3-LX-yJ1" id="n6Z-01-CxD"/>
-                        <outlet property="textMessage" destination="qYS-db-Z8d" id="ZJ4-vH-Kip"/>
                         <outlet property="textRecipient" destination="Ljv-eQ-qRA" id="Q9Z-qM-v7Q"/>
                         <outlet property="textSubject" destination="r78-D7-Utz" id="mpj-Zk-Wzn"/>
                     </connections>
@@ -150,7 +154,7 @@
             </objects>
             <point key="canvasLocation" x="282" y="190"/>
         </scene>
-        <!--Recording View Controller - 録音中-->
+        <!--Recording View Controller - Record-->
         <scene sceneID="rjq-xZ-PkA">
             <objects>
                 <viewController id="7rx-V8-12e" customClass="VMRecordingViewController" sceneMemberID="viewController">
@@ -158,19 +162,56 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Microphone.png" id="Hg3-in-Vsv">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_input_subject.png" id="5hC-6t-u2K">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <view contentMode="scaleToFill" id="bIl-Te-len">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="GdS-a2-n4a">
+                                <rect key="frame" x="136" y="220" width="47" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="badge_num_recorded.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="badgeTapped:" destination="7rx-V8-12e" eventType="touchUpInside" id="bS7-8C-JpF"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0:00.00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="h6s-BN-biG">
+                                <rect key="frame" x="60" y="60" width="200" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PuJ-S4-d4c">
+                                <rect key="frame" x="84" y="380" width="151" height="151"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" image="button_recording.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="stopRecording" destination="7rx-V8-12e" eventType="touchUpInside" id="X5R-H9-80w"/>
+                                </connections>
+                            </button>
+                            <view hidden="YES" contentMode="scaleToFill" id="zbH-pN-8S4">
+                                <rect key="frame" x="45" y="258" width="230" height="290"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="PuJ-S4-d4c">
-                                        <rect key="frame" x="128" y="430" width="64" height="64"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="tJs-GN-8Ib">
+                                        <rect key="frame" x="7" y="0.0" width="215" height="211"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" image="stop.png">
+                                        <state key="normal" title="Button" image="button_confirm_yes.png">
                                             <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -178,33 +219,62 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="TQx-g6-SS5" kind="push" id="qlz-Hs-kPi"/>
+                                            <action selector="confirmYes:" destination="7rx-V8-12e" eventType="touchUpInside" id="17u-Q9-yWo"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eDl-op-I9D">
+                                        <rect key="frame" x="82" y="220" width="65" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="Button" image="button_confirm_no.png">
+                                            <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="confirmNo:" destination="7rx-V8-12e" eventType="touchUpInside" id="mvE-i4-jcO"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Microphone.png" id="Hg3-in-Vsv">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="録音中" id="6Oj-sk-jwI"/>
+                    <navigationItem key="navigationItem" title="Record" id="6Oj-sk-jwI"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="blackTranslucent" prompted="NO"/>
+                    <connections>
+                        <outlet property="confirmView" destination="zbH-pN-8S4" id="ZDK-on-P8F"/>
+                        <outlet property="numRecordedBadgeButton" destination="GdS-a2-n4a" id="8li-OK-7pk"/>
+                        <outlet property="stopRecordingButton" destination="PuJ-S4-d4c" id="PQq-8f-xgk"/>
+                        <outlet property="timerLabel" destination="h6s-BN-biG" id="Z5n-1F-tsX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1r3-gV-PsY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="724" y="190"/>
         </scene>
-        <!--Upload Sound View Controller - アップロード中（音声）-->
+        <!--Upload Sound View Controller - Upload-->
         <scene sceneID="4i5-00-06D">
             <objects>
-                <viewController id="TQx-g6-SS5" customClass="VMUploadSoundViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UploadSound" id="TQx-g6-SS5" customClass="VMUploadSoundViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="QPM-o4-8NI">
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Microphone.png" id="HsO-gX-EEi">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_uploading.png" id="2dC-4r-nAy">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Microphone.png" id="HsO-gX-EEi">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="vaS-Yd-hOu">
                                 <rect key="frame" x="206" y="494" width="73" height="44"/>
@@ -228,13 +298,13 @@
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="アップロード中（音声）" id="aGN-S3-mtM"/>
+                    <navigationItem key="navigationItem" title="Upload" id="aGN-S3-mtM"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mBI-1J-V2e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1195" y="190"/>
         </scene>
-        <!--Upload Html View Controller - アップロード中（Web）-->
+        <!--Upload Html View Controller - Upload-->
         <scene sceneID="Gsx-up-TH6">
             <objects>
                 <viewController storyboardIdentifier="htmlUploading" id="hBK-3G-WfB" customClass="VMUploadHtmlViewController" sceneMemberID="viewController">
@@ -242,9 +312,13 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Microphone.png" id="tSn-yW-rbE">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_uploading.png" id="RPd-7N-oxL">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Microphone.png" id="tSn-yW-rbE">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="pOm-XN-zd5">
                                 <rect key="frame" x="227" y="485" width="73" height="44"/>
@@ -268,13 +342,13 @@
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="アップロード中（Web）" id="UcH-Bd-VXj"/>
+                    <navigationItem key="navigationItem" title="Upload" id="UcH-Bd-VXj"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l8X-sD-en4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1669" y="190"/>
         </scene>
-        <!--ShortURL View Controller - 短縮URLの取得中-->
+        <!--ShortURL View Controller - Upload-->
         <scene sceneID="Rrt-zW-T5l">
             <objects>
                 <viewController storyboardIdentifier="gettingShortURL" id="qNT-dN-gYO" customClass="VMShortURLViewController" sceneMemberID="viewController">
@@ -282,6 +356,10 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_uploading.png" id="082-Kv-csD">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="lzn-y9-fQX">
                                 <rect key="frame" x="227" y="485" width="73" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -304,13 +382,13 @@
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="短縮URLの取得中" id="S27-SJ-SvR"/>
+                    <navigationItem key="navigationItem" title="Upload" id="S27-SJ-SvR"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kr2-Nq-g5q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2053" y="190"/>
         </scene>
-        <!--Send Mail View Controller - メールの送信-->
+        <!--Send Mail View Controller - Upload-->
         <scene sceneID="jh2-VE-ifz">
             <objects>
                 <viewController storyboardIdentifier="sendingMail" id="7Fj-HT-Ugu" customClass="VMSendMailViewController" sceneMemberID="viewController">
@@ -318,14 +396,18 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Microphone.png" id="evI-qa-gmx">
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" image="bg_uploading.png" id="EpE-MB-x91">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Microphone.png" id="evI-qa-gmx">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="メールの送信" id="i5P-AM-5na"/>
+                    <navigationItem key="navigationItem" title="Upload" id="i5P-AM-5na"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2kY-4E-gHb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -334,8 +416,15 @@
     </scenes>
     <resources>
         <image name="Microphone.png" width="512" height="512"/>
-        <image name="record.png" width="32" height="32"/>
-        <image name="stop.png" width="32" height="32"/>
+        <image name="badge_num_recorded.png" width="47" height="44"/>
+        <image name="bg_connect_to_db.png" width="320" height="568"/>
+        <image name="bg_input_subject.png" width="320" height="568"/>
+        <image name="bg_name_text.png" width="167" height="28"/>
+        <image name="bg_subject_text.png" width="297" height="30"/>
+        <image name="bg_uploading.png" width="320" height="568"/>
+        <image name="button_confirm_no.png" width="65" height="64"/>
+        <image name="button_confirm_yes.png" width="215" height="211"/>
+        <image name="button_recording.png" width="151" height="151"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

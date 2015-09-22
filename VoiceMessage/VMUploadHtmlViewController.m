@@ -9,12 +9,21 @@
 #import "VMUploadHtmlViewController.h"
 #import "UTility.h"
 #import "VMShortURLViewController.h"
+#import "VMSendMailViewController.h"
+
 
 @interface VMUploadHtmlViewController ()
 
+@property (strong,nonatomic) BitlyURLShortener *bitly;
+@property (strong,nonatomic) NSURL *urlToBeShorten;
+
 @end
 
+
 @implementation VMUploadHtmlViewController
+
+@synthesize bitly;
+@synthesize urlToBeShorten;
 
 - (void)viewDidLoad
 {
@@ -22,8 +31,9 @@
     uploadingPath = nil;
 
 	// Do any additional setup after loading the view.
+    [self.navigationController setNavigationBarHidden:YES];
     self.navigationItem.hidesBackButton = YES;
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"中止" style:UIBarButtonItemStyleDone target:self action:@selector(done:)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"中止" style:UIBarButtonItemStyleDone target:self action:@selector(done:)];
 
     self.restClient = [[DBRestClient alloc] initWithSession:[DBSession sharedSession]];
     self.restClient.delegate = self;
@@ -138,14 +148,21 @@
 
 - (void)restClient:(DBRestClient *)restClient loadedSharableLink:(NSString *)link forFile:(NSString *)path {
 
-    NSLog(@"HTML uploaded successfully.");
-    NSString *dlLink = [link stringByReplacingOccurrencesOfString:@"www." withString:@"dl."];
-    
+    NSLog(@"HTML uploaded successfully. link[%@]", link);
+    NSString *dlLink = [[link stringByReplacingOccurrencesOfString:@"www." withString:@"dl."] stringByReplacingOccurrencesOfString:@"https" withString:@"http"];
+/*
     // アップロードの成功。次の画面へ
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     VMShortURLViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"gettingShortURL"];
     controller.urlToBeShorten = [NSURL URLWithString:dlLink];
     [self.navigationController pushViewController:controller animated:NO];
+*/
+    
+    self.bitly = [[BitlyURLShortener alloc] init];
+    self.bitly.delegate = self;
+    self.urlToBeShorten = [NSURL URLWithString:dlLink];;
+    
+    [self.bitly shortenURL:self.urlToBeShorten];
 }
 
 - (void)restClient:(DBRestClient *)restClient loadSharableLinkFailedWithError:(NSError *)error {
@@ -169,5 +186,31 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark -BitlyURLShortenerDelegate
+
+- (void) bitlyURLShortenerDidShortenURL:(BitlyURLShortener *)shortener longURL:(NSURL *)longURL shortURLString:(NSString *)shortURLString {
+    NSLog(@"Success:bitlyURLShortenerDidShortenURL:%@",shortURLString);
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    VMSendMailViewController *controller = [storyboard instantiateViewControllerWithIdentifier:@"sendingMail"];
+    controller.shortendURLString = shortURLString;
+    [self.navigationController pushViewController:controller animated:NO];
+}
+
+- (void) bitlyURLShortener:(BitlyURLShortener *)shortener didFailForLongURL:(NSURL *)longURL statusCode:(NSInteger)statusCode statusText:(NSString *)statusText {
+    
+    NSString *message = [NSString stringWithFormat:@"Bitlyでの短縮URLの取得に失敗しました:%d:%@",statusCode,statusText];
+    NSLog(@"%@",message);
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"エラー"
+                                                        message:message
+                                                       delegate:self
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+    
+    [alertView show];
+}
+
 
 @end

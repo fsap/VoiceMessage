@@ -8,6 +8,8 @@
 
 #import "VMSendMailViewController.h"
 #import "UTility.h"
+#import "VMInputSubjectViewController.h"
+
 
 @interface VMSendMailViewController ()
 
@@ -20,12 +22,14 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    [self.navigationController setNavigationBarHidden:YES];
     self.navigationItem.hidesBackButton = YES;
+/*
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"完了"
                                                                               style:UIBarButtonItemStyleDone
                                                                              target:self
                                                                              action:@selector(done:)];
-    
+*/
     self.composer = [[MFMailComposeViewController alloc] init];
     self.composer.mailComposeDelegate = self;
     
@@ -57,6 +61,7 @@
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
 
+    BOOL isClearText = NO;
     switch (result) {
         case MFMailComposeResultCancelled:
         {
@@ -84,7 +89,12 @@
             break;
         case MFMailComposeResultSent:
         {
-            NSLog(@"メールの送信が送信されました。");
+            isClearText = YES;
+            NSLog(@"メールが送信されました。");
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults setObject:@"" forKey:@"recipient"];
+            [defaults setObject:@"" forKey:@"subject"];
+            [defaults setObject:@"" forKey:@"message"];
         }
             break;
         default:
@@ -92,7 +102,19 @@
     }
     
     [self dismissViewControllerAnimated:YES completion:^{
-        //
+        VMLogMin();
+        /*
+        if (isClearText) {
+            for (id viewController in self.navigationController.viewControllers) {
+                if ([viewController isKindOfClass:[VMInputSubjectViewController class]]) {
+//                    [(VMInputSubjectViewController *)viewController clearText];
+                    VMLogM(@"set YES");
+                    ((VMInputSubjectViewController *)viewController).isClearText = YES;
+                }
+            }
+        }
+        */
+        [self.navigationController popToRootViewControllerAnimated:NO];
     }];
 }
 

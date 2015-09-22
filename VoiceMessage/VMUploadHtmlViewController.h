@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import <DropboxSDK/DropboxSDK.h>
+#import "BitlyURLShortener.h"
 
-@interface VMUploadHtmlViewController : UIViewController <DBRestClientDelegate,UIAlertViewDelegate> {
+
+@interface VMUploadHtmlViewController : UIViewController <DBRestClientDelegate,UIAlertViewDelegate, BitlyURLShortenerDelegate> {
     NSString *uploadingPath;
 }
 @property (strong,nonatomic)    NSString *linkForVoice;
